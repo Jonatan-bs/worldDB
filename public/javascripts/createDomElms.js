@@ -174,9 +174,11 @@ const createElm = {
     return par;
   },
   // Create dom elements for documents
-  createDocumentsDom(docs, collection) {
+  createDocumentsDom(docs, collection, extras) {
     const target = document.querySelector("#content");
-    target.innerHTML = "";
+    if (!extras) {
+      target.innerHTML = "";
+    }
     docs.forEach(doc => {
       const wrap = this.div({
         class: "document",

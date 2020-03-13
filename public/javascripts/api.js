@@ -1,30 +1,13 @@
 import createDomElms from "./createDomElms.js";
+let lazyload;
 
 export default {
-  // GET ALL DOCUMENTS FROM COLLECTION
+  // GET DOCUMENTS FROM COLLECTION
   getAll: e => {
     let collection = e.target.dataset.collection;
 
-    let body = {
-      query: {},
-      fields: "",
-      options: { limit: 20 }
-    };
-
-    fetch("http://localhost:3000/api/" + collection, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
-    })
-      .then(response => response.json())
-      .then(docs => {
-        createDomElms.createDocumentsDom(docs, collection);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    let loadmore = loadMoreConst(collection);
+    loadmore();
   },
   // GET "EDIT PAGE" FOR SINGLE DOCUMENT
   getOne: e => {
@@ -116,3 +99,59 @@ export default {
       });
   }
 };
+
+// check if scrolled to bottom of content div
+function bottomOfDiv() {
+  const contDiv = document.querySelector("#content");
+  var bounding = contDiv.getBoundingClientRect();
+
+  if (
+    bounding.bottom <=
+    (window.innerHeight || document.documentElement.clientHeight)
+  ) {
+    return true;
+  }
+}
+
+// Load Extra documents
+function loadMoreConst(collection) {
+  let skip = 0;
+  let extras = false;
+
+  let loadTwenty = () => {
+    document.removeEventListener("scroll", lazyload);
+
+    lazyload = () => {
+      if (bottomOfDiv()) {
+        loadTwenty();
+      }
+    };
+
+    let body = {
+      query: {},
+      fields: "",
+      options: { limit: 20, skip: skip }
+    };
+
+    fetch("http://localhost:3000/api/" + collection, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    })
+      .then(response => response.json())
+      .then(docs => {
+        createDomElms.createDocumentsDom(docs, collection, extras);
+        extras = true;
+
+        document.addEventListener("scroll", lazyload);
+
+        skip += 20;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+  return loadTwenty;
+}
