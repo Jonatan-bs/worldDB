@@ -7,6 +7,10 @@ const countrylanguageModel = require("./../models/countrylanguage");
 const governmentformModel = require("./../models/governmentform");
 const apiCtrl = require("./../controllers/api");
 
+router.get("/", (req, res, next) => {
+  res.render("index", { title: "World DB" });
+});
+
 /* Retrieve documents from collection */
 router.post("/api/:collection", apiCtrl.retrieve);
 

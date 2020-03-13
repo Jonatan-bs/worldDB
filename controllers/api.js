@@ -57,12 +57,16 @@ module.exports = {
   },
   retrieve(req, res, next) {
     const collection = req.params.collection;
-    const query = req.body;
-    model = mongoose.models[collection];
 
+    const body = req.body;
+    const query = body.query ? body.query : {};
+    const options = body.options ? body.options : {};
+    const fields = body.fields ? body.fields : null;
+
+    model = mongoose.models[collection];
     if (model) {
       model
-        .find(query)
+        .find(query, fields, options)
         .then(result => res.send(result))
         .catch(err => res.send({ error: err }));
     } else {
