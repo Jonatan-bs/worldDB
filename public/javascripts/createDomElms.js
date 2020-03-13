@@ -172,6 +172,67 @@ const createElm = {
     }
     par.textContent = args.text;
     return par;
+  },
+  // Create dom elements for documents
+  createDocumentsDom(docs, collection) {
+    const target = document.querySelector("#content");
+    target.innerHTML = "";
+    docs.forEach(doc => {
+      const wrap = this.div({
+        class: "document",
+        data: { name: "id", value: doc._id }
+      });
+      wrap.setAttribute("data-collection", collection);
+
+      for (const key in doc) {
+        if (key === "_id") continue;
+
+        const value = doc[key];
+        const par = this.par({
+          text: `${key}: ${value}`
+        });
+
+        wrap.append(par);
+      }
+      target.append(wrap);
+    });
+  },
+
+  // Create dom elements for selected document
+  createEditDocDom(doc, collection) {
+    doc = doc[0];
+    const target = document.querySelector("#content");
+    target.innerHTML = "";
+
+    let docWrap = this.div({ id: "docWrap" });
+    target.append(docWrap);
+
+    let button = this.button({ class: "update", text: "Update" });
+    docWrap.append(button);
+
+    button = this.button({ class: "delete", text: "Delete" });
+    docWrap.append(button);
+
+    let field = this.input({
+      type: "hidden",
+      name: "collection",
+      value: collection
+    });
+    docWrap.append(field);
+
+    for (const key in doc) {
+      const value = doc[key];
+      if (key === "_id") {
+        field = this.input({
+          type: "hidden",
+          name: "_id",
+          value: value
+        });
+      } else {
+        field = this.input({ type: "text", name: key, value: value });
+      }
+      docWrap.append(field);
+    }
   }
 };
 
