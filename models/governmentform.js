@@ -4,7 +4,7 @@ const userSchema = mongoose.Schema(
   {
     name: { type: String, required: true }
   },
-  { collection: "governmentform" }
+  { collection: "governmentform", versionKey: false }
 );
 
 module.exports = mongoose.model("governmentform", userSchema);

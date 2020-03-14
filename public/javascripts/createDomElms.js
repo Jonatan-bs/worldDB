@@ -178,6 +178,11 @@ const createElm = {
     const target = document.querySelector("#content");
     if (!extras) {
       target.innerHTML = "";
+
+      let button = this.button({ text: "Add document", class: "create" });
+      button.setAttribute("data-collection", collection);
+
+      target.append(button);
     }
     docs.forEach(doc => {
       const wrap = this.div({

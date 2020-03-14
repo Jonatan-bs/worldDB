@@ -5,13 +5,21 @@ document.addEventListener("click", e => {
   if (e.target.matches(".collection")) {
     api.getAll(e);
   }
-  // GET "EDIT PAGE" FOR SINGLE DOCUMENT
+  // INIT UPDATE PAGE
   if (e.target.parentNode.matches(".document")) {
     api.getOne(e);
   }
   // UPDATE DOCUMENT
   if (e.target.matches(".update")) {
     api.update(e);
+  }
+  // INIT CREATE PAGE
+  if (e.target.matches(".create")) {
+    api.setFields(e);
+  }
+  // CREATE DOCUMENT
+  if (e.target.matches(".createNew")) {
+    api.create(e);
   }
 
   // DELETE DOCUMENT

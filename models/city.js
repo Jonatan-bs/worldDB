@@ -8,7 +8,7 @@ const userSchema = mongoose.Schema(
     district: { type: String, required: true },
     population: { type: Number, required: true }
   },
-  { collection: "city" }
+  { collection: "city", versionKey: false }
 );
 
 module.exports = mongoose.model("city", userSchema);

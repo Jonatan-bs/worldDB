@@ -57,6 +57,7 @@ module.exports = {
   },
   retrieve(req, res, next) {
     const collection = req.params.collection;
+    let schema = mongoose.models[collection].schema.obj;
 
     const body = req.body;
     const query = body.query ? body.query : {};
@@ -67,10 +68,15 @@ module.exports = {
     if (model) {
       model
         .find(query, fields, options)
-        .then(result => res.send(result))
+        .then(result => res.send([result, schema]))
         .catch(err => res.send({ error: err }));
     } else {
       res.status(500).json({ Error: "Collection doesn't exist" });
     }
+  },
+  getSchema(req, res, next) {
+    const collection = req.params.collection;
+    const schema = mongoose.models[collection].schema.paths;
+    res.send(schema);
   }
 };

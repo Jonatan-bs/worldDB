@@ -23,4 +23,7 @@ router.post("/api/:collection/:id/delete", apiCtrl.delete);
 /* Update document from collection */
 router.post("/api/:collection/:id/update", apiCtrl.update);
 
+/* get Schema*/
+router.post("/api/schema/:collection", apiCtrl.getSchema);
+
 module.exports = router;

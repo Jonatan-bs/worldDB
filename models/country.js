@@ -18,7 +18,7 @@ const userSchema = mongoose.Schema(
     capital: { type: Number, required: true },
     code2: { type: String, required: true }
   },
-  { collection: "country" }
+  { collection: "country", versionKey: false }
 );
 
 module.exports = mongoose.model("country", userSchema);

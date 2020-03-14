@@ -7,7 +7,7 @@ const userSchema = mongoose.Schema(
     isofficial: { type: String, required: true },
     percentage: { type: Number, required: true }
   },
-  { collection: "countrylanguage" }
+  { collection: "countrylanguage", versionKey: false }
 );
 
 module.exports = mongoose.model("countrylanguage", userSchema);
