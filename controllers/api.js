@@ -78,5 +78,11 @@ module.exports = {
     const collection = req.params.collection;
     const schema = mongoose.models[collection].schema.paths;
     res.send(schema);
+  },
+  resetDB(req, res, next) {
+    mongoose.connection.db
+      .dropDatabase()
+      .then(response => res.send(response))
+      .catch(err => res.send(err));
   }
 };

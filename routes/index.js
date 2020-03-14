@@ -11,6 +11,12 @@ router.get("/", (req, res, next) => {
   res.render("index", { title: "World DB" });
 });
 
+/* get Schema*/
+router.post("/api/schema/:collection", apiCtrl.getSchema);
+
+/* reset database*/
+router.post("/api/resetDB", apiCtrl.resetDB);
+
 /* Retrieve documents from collection */
 router.post("/api/:collection", apiCtrl.retrieve);
 
@@ -22,8 +28,5 @@ router.post("/api/:collection/:id/delete", apiCtrl.delete);
 
 /* Update document from collection */
 router.post("/api/:collection/:id/update", apiCtrl.update);
-
-/* get Schema*/
-router.post("/api/schema/:collection", apiCtrl.getSchema);
 
 module.exports = router;

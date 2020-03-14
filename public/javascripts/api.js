@@ -126,9 +126,6 @@ export default {
     })
       .then(response => response.json())
       .then(schema => {
-        return schema;
-      })
-      .then(schema => {
         const target = document.querySelector("#content");
         target.innerHTML = "";
 
@@ -138,7 +135,7 @@ export default {
         target.append(docWrap);
 
         let button = createDomElms.button({
-          text: "Submit",
+          text: "Save",
           class: "createNew"
         });
         button.setAttribute("data-collection", collection);
@@ -148,18 +145,24 @@ export default {
           if (schema.hasOwnProperty(key)) {
             const field = schema[key];
             if (field.path === "_id" || field.path === "__v") continue;
+            const fieldWrap = createDomElms.div({ class: "field" });
+            docWrap.append(fieldWrap);
+
             let name = field.path;
             let inputType = datatypes[field.instance];
             let label = createDomElms.label({
               for: name,
               text: name
             });
-            docWrap.append(label);
+            fieldWrap.append(label);
+            let br = document.createElement("br");
+            fieldWrap.append(br);
+
             let input = createDomElms.input({
               type: inputType,
               name: name
             });
-            docWrap.append(input);
+            fieldWrap.append(input);
           }
         }
       })

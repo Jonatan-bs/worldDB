@@ -1,6 +1,8 @@
 body {
-  padding: 50px;
+  padding: 0;
+  background: #f2f2f2;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 0;
 }
 
 a {
@@ -10,8 +12,8 @@ a {
 .msg {
   padding: 10px;
   font-size: 20px;
-  background: #2f2f2f;
-  color: #fff;
+  background: #fff;
+  color: #213451;
   border-bottom: 5px solid #40b834;
   position: fixed;
   width: 270px;
@@ -21,13 +23,128 @@ a {
   transform: translate(-50%, 0px);
   text-align: center;
   opacity: 0;
-  transition: all 0.3s;
+  visibility: hidden;
+  box-shadow: 3px 3px 6px #00000020;
+  transition: top 0.3s, opacity 0.3s;
 }
 .msg.active {
   top: 50px;
   opacity: 1;
+  visibility: visible;
 }
 
 input.focus {
   border: 1px solid #a80303;
+}
+#menu {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: #213451;
+  height: 100%;
+  width: 250px;
+}
+
+button {
+  cursor: pointer;
+  padding: 10px;
+  background: #3f79d1;
+  border: 0;
+  color: #fff;
+  font-size: 19px;
+  margin-right: 5px;
+}
+input {
+  padding: 10px;
+  font-size: 20px;
+  width: 320px;
+  border: 0;
+}
+
+#content {
+  padding-left: 300px;
+  padding-top: 50px;
+  box-sizing: border-box;
+  width: 100%;
+  padding-right: 50px;
+}
+
+.document .data {
+  display: none;
+}
+.document {
+  background: #fff;
+  margin: 11px 0px;
+  box-sizing: border-box;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s;
+}
+.document .label {
+  font-size: 16px;
+  color: #3f79d1;
+  font-weight: bold;
+  padding: 17px 10px;
+}
+.document:hover {
+  transform: translateX(20px);
+}
+.field {
+  font-size: 16px;
+  color: #3f79d1;
+  font-weight: bold;
+  margin: 30px 0;
+}
+.collection {
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 0;
+}
+.collection img {
+  width: 22px;
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.collection p {
+  cursor: pointer;
+  color: #ffffff;
+  margin: 0;
+  padding: 20px 10px 20px 45px;
+}
+#worldGif {
+  width: 50%;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+}
+#worldGifWrap {
+  width: 100%;
+  background: #fff;
+  margin-bottom: 20px;
+}
+
+p#startCap {
+  margin: 0;
+  font-size: 30px;
+  font-style: italic;
+  color: #3f79d1;
+  text-align: center;
+}
+p#startName {
+  margin: 0;
+  font-size: 80px;
+  font-weight: bold;
+  color: #213451;
+  text-align: center;
+}
+.collection.selected {
+  padding-left: 5px;
+  background: #3f79d1;
+  border-left: 7px solid #3f79d1;
+}
+.collection:hover:not(.selected) {
+  border-left: 7px solid #3f79d1;
 }

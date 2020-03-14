@@ -13,7 +13,8 @@ export default function showMsg(text = "Success", type = 0) {
   }
 
   div.classList.add("active");
+
   setTimeout(() => {
     div.classList.remove("active");
-  }, 800);
+  }, 1000);
 }

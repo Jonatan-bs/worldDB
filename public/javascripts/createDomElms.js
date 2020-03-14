@@ -170,6 +170,9 @@ const createElm = {
     if (args.data) {
       par.setAttribute(args.data.name, args.data.value);
     }
+    if (args.class) {
+      par.classList.add(args.class);
+    }
     par.textContent = args.text;
     return par;
   },
@@ -179,7 +182,7 @@ const createElm = {
     if (!extras) {
       target.innerHTML = "";
 
-      let button = this.button({ text: "Add document", class: "create" });
+      let button = this.button({ text: "Add new document", class: "create" });
       button.setAttribute("data-collection", collection);
 
       target.append(button);
@@ -190,6 +193,16 @@ const createElm = {
         data: { name: "id", value: doc._id }
       });
       wrap.setAttribute("data-collection", collection);
+      if (doc.name) {
+        let title = createElm.par({ text: doc.name, class: "label" });
+        wrap.append(title);
+      } else {
+        let title = createElm.par({ text: doc.language, class: "label" });
+        wrap.append(title);
+      }
+
+      let dataDiv = createElm.div({ class: "data" });
+      wrap.append(dataDiv);
 
       for (const key in doc) {
         if (key === "_id") continue;
@@ -199,7 +212,7 @@ const createElm = {
           text: `${key}: ${value}`
         });
 
-        wrap.append(par);
+        dataDiv.append(par);
       }
       target.append(wrap);
     });
@@ -229,16 +242,26 @@ const createElm = {
 
     for (const key in doc) {
       const value = doc[key];
+      const fieldWrap = this.div({ class: "field" });
       if (key === "_id") {
         field = this.input({
           type: "hidden",
           name: "_id",
           value: value
         });
+        docWrap.append(field);
       } else {
+        let label = this.label({
+          text: key,
+          for: key
+        });
+        fieldWrap.append(label);
+        let br = document.createElement("br");
+        fieldWrap.append(br);
         field = this.input({ type: "text", name: key, value: value });
+        fieldWrap.append(field);
+        docWrap.append(fieldWrap);
       }
-      docWrap.append(field);
     }
   }
 };
