@@ -14,9 +14,6 @@ router.get("/", (req, res, next) => {
 /* get Schema*/
 router.post("/api/schema/:collection", apiCtrl.getSchema);
 
-/* reset database*/
-router.post("/api/resetDB", apiCtrl.resetDB);
-
 /* Retrieve documents from collection */
 router.post("/api/:collection", apiCtrl.retrieve);
 

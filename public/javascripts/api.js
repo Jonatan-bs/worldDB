@@ -120,6 +120,8 @@ export default {
   },
   // INIT CREATE PAGE
   setFields: e => {
+    document.removeEventListener("scroll", lazyload);
+
     let collection = e.target.dataset.collection;
     fetch("/api/schema/" + collection, {
       method: "post"
@@ -220,8 +222,9 @@ function bottomOfDiv() {
 function loadMoreConst(collection) {
   let skip = 0;
   let extras = false;
-
+  console.log("load");
   let loadTwenty = () => {
+    console.log("reload");
     document.removeEventListener("scroll", lazyload);
 
     lazyload = () => {
