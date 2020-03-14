@@ -222,9 +222,7 @@ function bottomOfDiv() {
 function loadMoreConst(collection) {
   let skip = 0;
   let extras = false;
-  console.log("load");
   let loadTwenty = () => {
-    console.log("reload");
     document.removeEventListener("scroll", lazyload);
 
     lazyload = () => {
@@ -266,7 +264,7 @@ function loadMoreConst(collection) {
   return loadTwenty;
 }
 
-// check if empty fields
+// check if empty fields or wrong datatype
 function emptyFields() {
   let docWrap = document.querySelector("#docWrap");
   let inputs = docWrap.querySelectorAll("input");
