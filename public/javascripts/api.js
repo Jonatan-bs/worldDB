@@ -1,4 +1,5 @@
 import createDomElms from "./createDomElms.js";
+import msg from "./message.js";
 
 let datatypes = {
   Number: "number",
@@ -43,6 +44,9 @@ export default {
   },
   // UPDATE DOCUMENT
   update: e => {
+    if (emptyFields()) {
+      return msg("All fields are required", 2);
+    }
     let docWrap = document.querySelector("#docWrap");
     let inputs = docWrap.querySelectorAll("input");
     let id;
@@ -67,7 +71,14 @@ export default {
       body: JSON.stringify(body)
     })
       .then(response => response.json())
-      .then(response => console.log(response))
+      .then(response => {
+        if (response.nModified) {
+          msg("Document was updated", 0);
+        } else {
+          msg("No change in document", 1);
+        }
+        console.log(response);
+      })
       .catch(err => {
         console.log(err);
       });
@@ -97,7 +108,12 @@ export default {
       body: JSON.stringify(body)
     })
       .then(response => response.json())
-      .then(response => console.log(response))
+      .then(response => {
+        if (response.deletedCount) {
+          msg("Document deleted", 0);
+        }
+        console.log(response);
+      })
       .catch(err => {
         console.log(err);
       });
@@ -153,6 +169,9 @@ export default {
   },
   // CREATE DOCUMENT
   create: e => {
+    if (emptyFields()) {
+      return msg("All fields are required", 2);
+    }
     let docWrap = document.querySelector("#docWrap");
     let inputs = docWrap.querySelectorAll("input");
     let collection = e.target.dataset.collection;
@@ -169,7 +188,12 @@ export default {
       body: JSON.stringify(body)
     })
       .then(response => response.json())
-      .then(response => console.log(response))
+      .then(response => {
+        if (response.message === "Document created") {
+          msg("Document created", 0);
+        }
+        console.log(response);
+      })
       .catch(err => {
         console.log(err);
       });
@@ -234,4 +258,21 @@ function loadMoreConst(collection) {
       });
   };
   return loadTwenty;
+}
+
+// check if empty fields
+function emptyFields() {
+  let docWrap = document.querySelector("#docWrap");
+  let inputs = docWrap.querySelectorAll("input");
+  let empty = false;
+  for (let i = 0; i < inputs.length; i++) {
+    const input = inputs[i];
+    if (input.value == "") {
+      empty = true;
+      input.classList.add("focus");
+    } else {
+      input.classList.remove("focus");
+    }
+  }
+  return empty;
 }
